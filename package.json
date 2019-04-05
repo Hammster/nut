@@ -4,6 +4,9 @@
   "author": "Hans Koch",
   "license": "MIT",
   "main": "index.ts",
+  "scripts": {
+    "build": "tsc && node ./dist/index.js"
+  },
   "dependencies": {
     "kleur": "^3.0.2",
     "tiny-glob": "^0.2.6"
