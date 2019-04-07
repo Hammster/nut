@@ -8,7 +8,7 @@
     "build": "tsc && node ./dist/index.js"
   },
   "dependencies": {
-    "kleur": "^3.0.2",
+    "colorette": "^1.0.7",
     "tiny-glob": "^0.2.6"
   },
   "devDependencies": {

@@ -20,7 +20,7 @@
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
 
-"@types/node@^11.11.6":
+"@types/node@^11.13.0":
   version "11.13.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.0.tgz#b0df8d6ef9b5001b2be3a94d909ce3c29a80f9e1"
 
@@ -102,6 +102,10 @@ color-convert@^1.9.0:
 color-name@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
+
+colorette@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.0.7.tgz#7adf43c445ee63a541b4a4aef7d13f03df1e0cc0"
 
 commander@^2.12.1, commander@^2.19.0:
   version "2.20.0"
@@ -210,15 +214,11 @@ js-tokens@^4.0.0:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
 
 js-yaml@^3.13.0:
-  version "3.13.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.0.tgz#38ee7178ac0eea2c97ff6d96fff4b18c7d8cf98e"
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
-
-kleur@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.2.tgz#83c7ec858a41098b613d5998a7b653962b504f68"
 
 merge-stream@^1.0.1:
   version "1.0.1"
@@ -288,11 +288,11 @@ rollup-plugin-terser@^4.0.4:
     terser "^3.14.1"
 
 rollup@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.8.0.tgz#e3ce8b708ad4325166717f74f244f691595d35e2"
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.9.0.tgz#65f7db8d312a07d4e9702316025f91df56ce9f9c"
   dependencies:
     "@types/estree" "0.0.39"
-    "@types/node" "^11.11.6"
+    "@types/node" "^11.13.0"
     acorn "^6.1.1"
 
 safe-buffer@~5.1.0, safe-buffer@~5.1.1:
@@ -418,8 +418,8 @@ tsutils@^3.0.0:
     tslib "^1.8.1"
 
 typescript@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.2.tgz#9ed4e6475d906f589200193be056f5913caed481"
 
 util-deprecate@~1.0.1:
   version "1.0.2"

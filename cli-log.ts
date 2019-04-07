@@ -1,4 +1,4 @@
-import style from 'kleur'
+import colorette, { reset } from 'colorette'
 import { ICLILogDefaultOptions, ITextStyle } from './types/cli-log'
 
 const defaultOptions: ICLILogDefaultOptions = {
@@ -42,7 +42,7 @@ export function log (msg: string, textStyle: Partial<ITextStyle> = {}) {
 
   // kleur has a issue with bgRed to prevent that we always reset after logging
   // tslint:disable-next-line:no-console
-  console.log(msg + style.reset(''))
+  console.log(msg + reset(''))
 }
 
-export { style }
+export { colorette as style }
