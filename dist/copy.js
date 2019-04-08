@@ -13,12 +13,12 @@ function copy(sources, target) {
     if (!path_1.default.isAbsolute(target)) {
         target = path_1.default.join(__dirname, target);
     }
+    cli_log_1.log('semething');
     if (fs_1.default.existsSync(target)) {
         cli_log_1.log(`Copy to ${target}`);
         sources.forEach(async (source) => {
-            spinner_1.spinWrap(() => {
-                return tiny_glob_1.default(source);
-            }).then((result) => {
+            spinner_1.spinWrap(tiny_glob_1.default(source))
+                .then((result) => {
                 /* tslint:disable */
                 console.log(result);
             });

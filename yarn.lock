@@ -287,7 +287,7 @@ rollup-plugin-terser@^4.0.4:
     serialize-javascript "^1.6.1"
     terser "^3.14.1"
 
-rollup@^1.8.0:
+rollup@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.9.0.tgz#65f7db8d312a07d4e9702316025f91df56ce9f9c"
   dependencies:
@@ -357,6 +357,10 @@ terser@^3.14.1:
     commander "^2.19.0"
     source-map "~0.6.1"
     source-map-support "~0.5.10"
+
+testmatrix@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/testmatrix/-/testmatrix-0.1.2.tgz#0618430dd858fe2f6dd88907b25ac030d9435b67"
 
 tiny-glob@^0.2.6:
   version "0.2.6"

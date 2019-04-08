@@ -1,10 +1,14 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const kleur_1 = __importDefault(require("kleur"));
-exports.style = kleur_1.default;
+const colorette_1 = __importStar(require("colorette"));
+exports.style = colorette_1.default;
 const defaultOptions = {
     seperatorCharacter: '─',
     seperatorLength: 80
@@ -39,6 +43,6 @@ function log(msg, textStyle = {}) {
     }
     // kleur has a issue with bgRed to prevent that we always reset after logging
     // tslint:disable-next-line:no-console
-    console.log(msg + kleur_1.default.reset(''));
+    console.log(msg + colorette_1.reset(''));
 }
 exports.log = log;

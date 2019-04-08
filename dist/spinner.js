@@ -8,9 +8,11 @@ const cli_log_1 = require("./cli-log");
 const spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 let spinState = 0;
 let spinInterval;
+const hideCursor = '\u001b[?25l';
+const showCursor = '\u001b[?25h';
 function updateSpinner() {
     // readline.clearLine(process.stdout, 0)
-    process.stdout.write('\u001b[?25l');
+    process.stdout.write(hideCursor);
     readline_1.default.cursorTo(process.stdout, 0);
     spinState = (spinState + 1) % spinner.length;
     process.stdout.write(`${cli_log_1.style.green(spinner[spinState])} loading`);
@@ -19,23 +21,21 @@ function spinWrap(wrappedFunction) {
     spinInterval = setInterval(updateSpinner, 100);
     return new Promise((resolve, reject) => {
         /* tslint:disable:only-arrow-functions */
-        wrappedFunction().then(function () {
-            readline_1.default.clearLine(process.stdout, 0);
-            readline_1.default.cursorTo(process.stdout, 0);
+        wrappedFunction.then(function () {
+            stopSpinner();
+            process.stdout.write(`${cli_log_1.style.green('✓')} done${showCursor}\n`);
             resolve(...arguments);
         }).catch((error) => {
-            readline_1.default.clearLine(process.stdout, 0);
-            readline_1.default.cursorTo(process.stdout, 0);
-            process.stdout.write('\n\n');
-            reject(error);
-        }).finally(() => {
             stopSpinner();
-            process.stdout.write('\u001b[?25h');
+            process.stdout.write(`${cli_log_1.style.red('✗')} error${showCursor}\n${error}`);
+            reject(error);
         });
     });
 }
 exports.spinWrap = spinWrap;
 function stopSpinner() {
     clearInterval(spinInterval);
+    readline_1.default.clearLine(process.stdout, 0);
+    readline_1.default.cursorTo(process.stdout, 0);
 }
 exports.stopSpinner = stopSpinner;

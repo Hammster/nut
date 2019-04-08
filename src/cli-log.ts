@@ -1,5 +1,5 @@
 import colorette, { reset } from 'colorette'
-import { ICLILogDefaultOptions, ITextStyle } from './types/cli-log'
+import { ICLILogDefaultOptions, ITextStyle } from '../types/cli-log'
 
 const defaultOptions: ICLILogDefaultOptions = {
   seperatorCharacter: '─',

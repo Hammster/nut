@@ -10,15 +10,16 @@ export function copy (sources: string[], target: string) {
     target = path.join(__dirname, target)
   }
 
+  log('semething')
+
   if (fs.existsSync(target)) {
     log(`Copy to ${target}`)
     sources.forEach(async (source) => {
-      spinWrap(() => {
-        return glob(source)
-      }).then((result) => {
-        /* tslint:disable */
-        console.log(result)
-      })
+      spinWrap(glob(source))
+        .then((result) => {
+          /* tslint:disable */
+          console.log(result)
+        })
     })
   } else {
     throw new NutError(`Target does not exist (${target})`)

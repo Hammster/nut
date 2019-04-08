@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "author": "Hans Koch",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc && node ./dist/index.js"
   },
   "dependencies": {
     "colorette": "^1.0.7",
+    "testmatrix": "^0.1.2",
     "tiny-glob": "^0.2.6"
   },
   "devDependencies": {
-    "rollup": "^1.8.0",
+    "rollup": "^1.9.0",
     "rollup-plugin-terser": "^4.0.4",
     "tslint": "^5.15.0",
     "tslint-config-standard": "^8.0.1",
