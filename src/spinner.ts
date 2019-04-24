@@ -1,5 +1,5 @@
 import readline from 'readline'
-import { log, style } from './cli-log'
+import { style } from './cli/util'
 import { NutError } from './error'
 
 const spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
@@ -14,27 +14,29 @@ function updateSpinner () {
   process.stdout.write(hideCursor)
   readline.cursorTo(process.stdout, 0)
   spinState = (spinState + 1) % spinner.length
-  process.stdout.write(`${style.green(spinner[spinState])} loading`)
+  process.stdout.write(`${style.green(spinner[spinState])}`)
 }
 
-export function spinWrap (wrappedFunction: Promise<any>): Promise<any> {
+export function spinWrap (wrappedFunction: Promise<any>, msg: string = 'loading'): Promise<any> {
+  process.stdout.write(`${style.green(spinner[spinState])} ${msg}`)
   spinInterval = setInterval(updateSpinner, 100)
+
   return new Promise((resolve, reject) => {
     /* tslint:disable:only-arrow-functions */
     wrappedFunction.then(function () {
       stopSpinner()
-      process.stdout.write(`${style.green('✓')} done${showCursor}\n`)
+      readline.cursorTo(process.stdout, 0)
+      process.stdout.write(`${style.green('✓')} ${msg}\n`)
       resolve(...arguments)
     }).catch((error: Error) => {
       stopSpinner()
-      process.stdout.write(`${style.red('✗')} error${showCursor}\n${error}`)
-      reject(error)
+      readline.cursorTo(process.stdout, 0)
+      process.stdout.write(`${style.red('✗')} ${msg}${showCursor}\n`)
+      reject(NutError.convertFromError(error))
     })
   })
 }
 
 export function stopSpinner () {
   clearInterval(spinInterval)
-  readline.clearLine(process.stdout, 0)
-  readline.cursorTo(process.stdout, 0)
 }

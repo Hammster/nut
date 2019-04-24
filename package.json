@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc && node ./dist/index.js"
+    "build": "tsc"
   },
   "dependencies": {
     "colorette": "^1.0.7",
@@ -13,10 +13,10 @@
     "tiny-glob": "^0.2.6"
   },
   "devDependencies": {
-    "rollup": "^1.9.0",
+    "rollup": "^1.10.1",
     "rollup-plugin-terser": "^4.0.4",
-    "tslint": "^5.15.0",
+    "tslint": "^5.16.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.4.1"
+    "typescript": "^3.4.5"
   }
 }

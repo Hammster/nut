@@ -1,12 +1,5 @@
-import { Style } from 'colorette'
-
-export interface ITextStyle {
-    indention: number
-    padding: boolean
-    styles: Style[]
-}
-
-export interface ICLILogDefaultOptions {
+export interface ICLILogOptions {
   seperatorCharacter: string
   seperatorLength: number
+  tableEntryMaxWidth: number
 }
