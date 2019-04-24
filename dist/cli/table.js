@@ -1,21 +1,19 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const colorette_1 = __importStar(require("colorette"));
-exports.style = colorette_1.default;
+const log_1 = require("./log");
+const util_1 = require("./util");
 const defaultOptions = {
-    seperatorCharacter: '─',
-    seperatorLength: 80,
-    tableEntryMaxWidth: 16
+    borderStyle: [],
+    columnNames: [],
+    tableEntryMaxWidth: 16,
+    textStyle: [util_1.style.white]
+};
+const defaultTableStyle = {
+    borderStyle: defaultOptions.borderStyle,
+    columnNames: defaultOptions.columnNames,
+    textStyle: defaultOptions.textStyle
 };
 let options = Object.assign({}, defaultOptions);
-let seperatorString = '';
 let tabelHorizontal = '';
 let safeStringLength = 0;
 var TableChars;
@@ -37,44 +35,12 @@ var TableChars;
 setOption();
 function setOption(overrideOptions = {}) {
     options = Object.assign({}, options, overrideOptions);
-    seperatorString = options.seperatorCharacter.repeat(options.seperatorLength);
     tabelHorizontal = TableChars.HorizontalLine.repeat(options.tableEntryMaxWidth);
     safeStringLength = options.tableEntryMaxWidth - 3;
 }
 exports.setOption = setOption;
-function applyStyle(msg, textStyle = {}) {
-    if (textStyle.padding) {
-        msg = ` ${msg} `;
-    }
-    if (textStyle.indention) {
-        msg = `${'\t'.repeat(textStyle.indention)}${msg}`;
-    }
-    if (textStyle.styles) {
-        textStyle.styles.forEach((styleFunction) => {
-            msg = styleFunction(msg);
-        });
-    }
-    return msg;
-}
-function title(msg, textStyle = {}) {
-    msg = ` ${msg} `;
-    const seperatorStart = seperatorString.slice(0, 4);
-    const seperatorEnd = seperatorString.slice(4, seperatorString.length - msg.length);
-    const seperatorUnion = seperatorStart + applyStyle(msg, textStyle) + seperatorEnd;
-    log(`\n${seperatorUnion}`);
-}
-exports.title = title;
-function log(msg, textStyle = {}) {
-    // tslint:disable-next-line:no-console
-    console.log(applyStyle(msg, textStyle) + colorette_1.reset(''));
-}
-exports.log = log;
-function seperator(textStyle = {}) {
-    log(seperatorString, textStyle);
-}
-exports.seperator = seperator;
-// tslint:disable-next-line:max-line-length
-function logTable(data = [], headerData = [], textStyle = {}, borderStyle = {}) {
+function logTable(data = [], overloadTableStyle = {}) {
+    const tableStyle = Object.assign({}, defaultTableStyle, overloadTableStyle);
     let workingData;
     if (data instanceof Set) {
         workingData = [...data];
@@ -86,12 +52,12 @@ function logTable(data = [], headerData = [], textStyle = {}, borderStyle = {}) 
         workingData = data;
     }
     const rowCount = workingData.length;
-    let cellCount = headerData.length;
+    let cellCount = tableStyle.columnNames.length;
     if (cellCount === 0) {
-        headerData = Object.keys(workingData.reduce((result, obj) => {
+        tableStyle.columnNames = Object.keys(workingData.reduce((result, obj) => {
             return Object.assign(result, obj);
         }, {}));
-        cellCount = headerData.length;
+        cellCount = tableStyle.columnNames.length;
     }
     const trimedCellCount = cellCount > 0 ? cellCount - 1 : 0;
     let table = '';
@@ -106,7 +72,7 @@ function logTable(data = [], headerData = [], textStyle = {}, borderStyle = {}) 
     function makeHeader() {
         table += TableChars.HeadStart + tabelHorizontal;
         table += (TableChars.JoinDown + tabelHorizontal).repeat(trimedCellCount) + TableChars.HeadEnd + '\n';
-        makeCells(headerData);
+        makeCells(tableStyle.columnNames);
     }
     function makeRow() {
         table += TableChars.JoinRight + tabelHorizontal;
@@ -118,24 +84,24 @@ function logTable(data = [], headerData = [], textStyle = {}, borderStyle = {}) 
     }
     function makeCells(cellData) {
         let isHead = false;
-        if (headerData === cellData) {
+        if (tableStyle.columnNames === cellData) {
             isHead = true;
-            cellData = headerData.reduce((accumulator, currentValue) => {
+            cellData = tableStyle.columnNames.reduce((accumulator, currentValue) => {
                 accumulator[currentValue] = currentValue;
                 return accumulator;
             }, {});
         }
-        headerData.forEach((columnProperty) => {
+        tableStyle.columnNames.forEach((columnProperty) => {
             const val = cellData[columnProperty] || '';
             const text = val.toString();
             const fillchar = text.length >= safeStringLength ? '.' : ' ';
             table += TableChars.VerticalLine;
             const formatted = text.substring(0, safeStringLength).padEnd(options.tableEntryMaxWidth, fillchar);
             // tslint:disable-next-line:max-line-length
-            table += isHead ? applyStyle(formatted, { styles: [colorette_1.default.bgWhite, colorette_1.default.black] }) : applyStyle(formatted, { styles: [colorette_1.default.white] });
+            table += isHead ? util_1.applyStyle(formatted, { styles: [util_1.style.bgWhite, util_1.style.black] }) : util_1.applyStyle(formatted, { styles: tableStyle.textStyle });
         });
         table += TableChars.VerticalLine + '\n';
     }
-    log(table, borderStyle);
+    log_1.log(table, { styles: tableStyle.borderStyle });
 }
 exports.logTable = logTable;
