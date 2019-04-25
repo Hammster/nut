@@ -38,7 +38,7 @@ enum TableChars {
 
 setOption()
 
-export function setOption (overrideOptions: Partial<ICLITableOptions> = {}) {
+function setOption (overrideOptions: Partial<ICLITableOptions> = {}) {
   options = { ...options, ...overrideOptions }
   tabelHorizontal = TableChars.HorizontalLine.repeat(options.tableEntryMaxWidth)
   safeStringLength = options.tableEntryMaxWidth - 3

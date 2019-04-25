@@ -16,7 +16,7 @@ const defaultOptions: ICopyOptions = {
 
 let options: ICopyOptions = { ...defaultOptions }
 
-export function setOption (overrideOptions: Partial<ICopyOptions> = {}) {
+function setOption (overrideOptions: Partial<ICopyOptions> = {}) {
   options = { ...options, ...overrideOptions }
 }
 

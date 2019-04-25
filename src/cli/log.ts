@@ -14,7 +14,7 @@ let seperatorString = ''
 
 setOption()
 
-export function setOption (overrideOptions: Partial<ICLILogOptions> = {}) {
+function setOption (overrideOptions: Partial<ICLILogOptions> = {}) {
   options = { ...options, ...overrideOptions }
   seperatorString = options.seperatorCharacter.repeat(options.seperatorLength)
 }

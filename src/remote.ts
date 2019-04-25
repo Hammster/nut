@@ -13,7 +13,7 @@ const pipe = promisify(pipeline)
 
 let options: IDownloadOptions = { ...defaultOptions }
 
-export function setOption (overrideOptions: Partial<IDownloadOptions> = {}) {
+function setOption (overrideOptions: Partial<IDownloadOptions> = {}) {
   options = { ...options, ...overrideOptions }
 }
 
