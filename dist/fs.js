@@ -18,7 +18,6 @@ let options = Object.assign({}, defaultOptions);
 function setOption(overrideOptions = {}) {
     options = Object.assign({}, options, overrideOptions);
 }
-exports.setOption = setOption;
 async function copy(sources, target, overrideOptions = {}) {
     if (Object.keys(overrideOptions).length !== 0) {
         setOption(overrideOptions);
@@ -49,4 +48,4 @@ async function copy(sources, target, overrideOptions = {}) {
     }
 }
 exports.copy = copy;
-// @TODO: delete, move
+// @TODO: create, delete, move

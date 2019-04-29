@@ -16,7 +16,6 @@ let options = Object.assign({}, defaultOptions);
 function setOption(overrideOptions = {}) {
     options = Object.assign({}, options, overrideOptions);
 }
-exports.setOption = setOption;
 async function download(source, target, overrideOptions = {}) {
     if (Object.keys(overrideOptions).length !== 0) {
         setOption(overrideOptions);

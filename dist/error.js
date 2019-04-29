@@ -6,6 +6,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const log_1 = require("./cli/log");
 const util_1 = require("./cli/util");
+function catchUnhandledRejections() {
+    process.on('unhandledRejection', (error, promise) => {
+        if (error instanceof NutError) {
+            throw error;
+        }
+        else if (error instanceof Error) {
+            throw NutError.convertFromError(error);
+        }
+        else {
+            throw new NutError('');
+        }
+    });
+}
+exports.catchUnhandledRejections = catchUnhandledRejections;
+function handleError(error) {
+    throw NutError.convertFromError(error);
+}
+exports.handleError = handleError;
 class NutError extends Error {
     static convertFromError(error) {
         return new NutError(error.message, error.stack);

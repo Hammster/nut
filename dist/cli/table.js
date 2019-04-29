@@ -38,7 +38,6 @@ function setOption(overrideOptions = {}) {
     tabelHorizontal = TableChars.HorizontalLine.repeat(options.tableEntryMaxWidth);
     safeStringLength = options.tableEntryMaxWidth - 3;
 }
-exports.setOption = setOption;
 function logTable(data = [], overloadTableStyle = {}) {
     const tableStyle = Object.assign({}, defaultTableStyle, overloadTableStyle);
     let workingData;

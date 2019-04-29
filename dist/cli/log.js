@@ -13,7 +13,6 @@ function setOption(overrideOptions = {}) {
     options = Object.assign({}, options, overrideOptions);
     seperatorString = options.seperatorCharacter.repeat(options.seperatorLength);
 }
-exports.setOption = setOption;
 function title(msg, textStyle = {}, seperatorStyle = {}) {
     msg = ` ${msg} `;
     const seperatorStart = seperatorString.slice(0, 4);
