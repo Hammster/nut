@@ -3,6 +3,22 @@ import readline from 'readline'
 import { log, seperator, title } from './cli/log'
 import { applyStyle, style } from './cli/util'
 
+export function catchUnhandledRejections () {
+  process.on('unhandledRejection', (error, promise) => {
+    if (error instanceof NutError) {
+      throw error
+    } else if (error instanceof Error) {
+      throw NutError.convertFromError(error)
+    } else {
+      throw new NutError('')
+    }
+  })
+}
+
+export function handleError (error: Error) {
+  throw NutError.convertFromError(error)
+}
+
 export class NutError extends Error {
   public static convertFromError (error: Error): NutError {
     return new NutError(error.message, error.stack!)
