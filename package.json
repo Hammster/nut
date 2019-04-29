@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Hans Koch",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "node dist/index.js"
