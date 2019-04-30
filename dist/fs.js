@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const crypto_1 = __importDefault(require("crypto"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const tiny_glob_1 = __importDefault(require("tiny-glob"));
@@ -48,4 +49,25 @@ async function copy(sources, target, overrideOptions = {}) {
     }
 }
 exports.copy = copy;
+async function combinedFileHash(globData) {
+    const paths = await tiny_glob_1.default(globData, { cwd: options.cwd });
+    const bufferList = [];
+    console.log(paths);
+    console.log(options.cwd);
+    for (let element of paths) {
+        element = path_1.default.join(options.cwd, element);
+        const stat = await fs_1.default.promises.lstat(element);
+        if (stat.isFile()) {
+            bufferList.push(Buffer.from(element));
+            bufferList.push(fs_1.default.readFileSync(element));
+        }
+        else {
+            bufferList.push(Buffer.from(element));
+        }
+    }
+    const resultBuffer = Buffer.concat(bufferList);
+    const hash = crypto_1.default.createHash('sha1');
+    return hash.update(resultBuffer).digest('base64');
+}
+exports.combinedFileHash = combinedFileHash;
 // @TODO: create, delete, move

@@ -1,3 +1,4 @@
+import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 import glob from 'tiny-glob'
@@ -54,6 +55,30 @@ export async function copy (sources: string[], target: string, overrideOptions: 
   } else {
     throw new NutError(`Target does not exist ${target}`)
   }
+}
+
+export async function combineFileTreeHash (globData: string): Promise<string> {
+  const paths = await glob(globData, { cwd: options.cwd })
+
+  const bufferList = []
+
+  for (let element of paths) {
+    element = path.join(options.cwd, element)
+
+    const stat = await fs.promises.lstat(element)
+
+    if (stat.isFile()) {
+      bufferList.push(Buffer.from(element))
+      bufferList.push(fs.readFileSync(element))
+    } else {
+      bufferList.push(Buffer.from(element))
+    }
+  }
+
+  const resultBuffer = Buffer.concat(bufferList)
+  const hash = crypto.createHash('sha1')
+
+  return hash.update(resultBuffer).digest('base64')
 }
 
 // @TODO: create, delete, move
