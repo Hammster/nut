@@ -3,6 +3,11 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = require("./fs");
+(async () => {
+    console.log('s');
+    console.log(await fs_1.fileHash('./index.js'));
+})();
 __export(require("./archive"));
 __export(require("./cli/log"));
 __export(require("./cli/table"));

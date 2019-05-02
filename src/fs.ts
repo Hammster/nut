@@ -57,6 +57,29 @@ export async function copy (sources: string[], target: string, overrideOptions: 
   }
 }
 
+export async function fileHash (filePath: string): Promise<string> {
+  const bufferList = []
+
+  const absFilePath = path.join(options.cwd, filePath)
+  if (fs.existsSync(absFilePath)) {
+    const stat = await fs.promises.lstat(absFilePath)
+
+    if (stat.isFile()) {
+      bufferList.push(Buffer.from(absFilePath))
+      bufferList.push(fs.readFileSync(absFilePath))
+    } else {
+      throw new NutError('Given filepath is not a file')
+    }
+
+    const resultBuffer = Buffer.concat(bufferList)
+    const hash = crypto.createHash('sha1')
+
+    return hash.update(resultBuffer).digest('base64')
+  } else {
+    throw new NutError('Given filepath does not exist')
+  }
+}
+
 export async function combineFileTreeHash (globData: string): Promise<string> {
   const paths = await glob(globData, { cwd: options.cwd })
 

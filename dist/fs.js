@@ -49,11 +49,30 @@ async function copy(sources, target, overrideOptions = {}) {
     }
 }
 exports.copy = copy;
-async function combinedFileHash(globData) {
+async function fileHash(filePath) {
+    const bufferList = [];
+    const absFilePath = path_1.default.join(options.cwd, filePath);
+    if (fs_1.default.existsSync(absFilePath)) {
+        const stat = await fs_1.default.promises.lstat(absFilePath);
+        if (stat.isFile()) {
+            bufferList.push(Buffer.from(absFilePath));
+            bufferList.push(fs_1.default.readFileSync(absFilePath));
+        }
+        else {
+            throw new error_1.NutError('Given filepath is not a file');
+        }
+        const resultBuffer = Buffer.concat(bufferList);
+        const hash = crypto_1.default.createHash('sha1');
+        return hash.update(resultBuffer).digest('base64');
+    }
+    else {
+        throw new error_1.NutError('Given filepath does not exist');
+    }
+}
+exports.fileHash = fileHash;
+async function combineFileTreeHash(globData) {
     const paths = await tiny_glob_1.default(globData, { cwd: options.cwd });
     const bufferList = [];
-    console.log(paths);
-    console.log(options.cwd);
     for (let element of paths) {
         element = path_1.default.join(options.cwd, element);
         const stat = await fs_1.default.promises.lstat(element);
@@ -69,5 +88,5 @@ async function combinedFileHash(globData) {
     const hash = crypto_1.default.createHash('sha1');
     return hash.update(resultBuffer).digest('base64');
 }
-exports.combinedFileHash = combinedFileHash;
+exports.combineFileTreeHash = combineFileTreeHash;
 // @TODO: create, delete, move
