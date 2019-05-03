@@ -37,7 +37,7 @@ export async function copy (sources: string[], target: string, overrideOptions: 
     log(`options:\n${JSON.stringify(options, undefined, 2)}\n`)
 
     for (const source of sources) {
-      const result: string[] = await spinWrap(glob(source, { cwd: options.cwd }), `copy: ${source}`)
+      const result: string[] = await spinWrap(glob(source), `copy: ${source}`)
 
       for (const resultItem of result) {
         const newRelativePath = options.flat ? path.basename(resultItem) : resultItem
@@ -81,7 +81,7 @@ export async function fileHash (filePath: string): Promise<string> {
 }
 
 export async function combineFileTreeHash (globData: string): Promise<string> {
-  const paths = await glob(globData, { cwd: options.cwd })
+  const paths = await glob(globData)
 
   const bufferList = []
 
