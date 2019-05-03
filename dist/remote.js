@@ -12,9 +12,9 @@ const error_1 = require("./error");
 const spinner_1 = require("./spinner");
 const defaultOptions = {};
 const pipe = util_1.promisify(stream_1.pipeline);
-let options = Object.assign({}, defaultOptions);
+let options = { ...defaultOptions };
 function setOption(overrideOptions = {}) {
-    options = Object.assign({}, options, overrideOptions);
+    options = { ...options, ...overrideOptions };
 }
 async function download(source, target, overrideOptions = {}) {
     if (Object.keys(overrideOptions).length !== 0) {
@@ -51,7 +51,7 @@ async function request(source, writeStream) {
                 // Follow the redirect or throw errow
                 case 302:
                     maxRedirect--;
-                    source = new URL('', response.headers.location);
+                    source = response.headers.location;
                     if (maxRedirect > 0) {
                         await request(source, writeStream);
                     }

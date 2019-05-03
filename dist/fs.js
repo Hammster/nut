@@ -15,9 +15,9 @@ const defaultOptions = {
     flat: false,
     verbose: false
 };
-let options = Object.assign({}, defaultOptions);
+let options = { ...defaultOptions };
 function setOption(overrideOptions = {}) {
-    options = Object.assign({}, options, overrideOptions);
+    options = { ...options, ...overrideOptions };
 }
 async function copy(sources, target, overrideOptions = {}) {
     if (Object.keys(overrideOptions).length !== 0) {

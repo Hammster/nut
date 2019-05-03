@@ -6,11 +6,11 @@ const defaultOptions = {
     seperatorLength: 80,
     tableEntryMaxWidth: 16
 };
-let options = Object.assign({}, defaultOptions);
+let options = { ...defaultOptions };
 let seperatorString = '';
 setOption();
 function setOption(overrideOptions = {}) {
-    options = Object.assign({}, options, overrideOptions);
+    options = { ...options, ...overrideOptions };
     seperatorString = options.seperatorCharacter.repeat(options.seperatorLength);
 }
 function title(msg, textStyle = {}, seperatorStyle = {}) {
