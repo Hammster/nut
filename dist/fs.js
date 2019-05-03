@@ -31,7 +31,7 @@ async function copy(sources, target, overrideOptions = {}) {
         log_1.log(`target:\t ${target}`);
         log_1.log(`options:\n${JSON.stringify(options, undefined, 2)}\n`);
         for (const source of sources) {
-            const result = await spinner_1.spinWrap(tiny_glob_1.default(source, { cwd: options.cwd }), `copy: ${source}`);
+            const result = await spinner_1.spinWrap(tiny_glob_1.default(source), `copy: ${source}`);
             for (const resultItem of result) {
                 const newRelativePath = options.flat ? path_1.default.basename(resultItem) : resultItem;
                 const contextSource = path_1.default.join(options.cwd, resultItem);
@@ -71,7 +71,7 @@ async function fileHash(filePath) {
 }
 exports.fileHash = fileHash;
 async function combineFileTreeHash(globData) {
-    const paths = await tiny_glob_1.default(globData, { cwd: options.cwd });
+    const paths = await tiny_glob_1.default(globData);
     const bufferList = [];
     for (let element of paths) {
         element = path_1.default.join(options.cwd, element);
