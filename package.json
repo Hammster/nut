@@ -6,6 +6,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "format": "prettier-tslint fix 'src/**/*.ts'",
+    "lint": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts' --outputAbsolutePaths",
     "test": "node dist/index.js"
   },
   "dependencies": {
@@ -14,8 +16,8 @@
     "tiny-glob": "^0.2.6"
   },
   "devDependencies": {
-    "rollup": "^1.10.1",
-    "rollup-plugin-terser": "^4.0.4",
+    "@types/node": "^11.13.9",
+    "prettier-tslint": "^0.4.2",
     "tslint": "^5.16.0",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.4.5"

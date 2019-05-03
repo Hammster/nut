@@ -1,22 +1,14 @@
 {
   "compilerOptions": {
-      "rootDir": "./src",
-      
-      "declaration": true,
-      /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
-      "target": "es2017",
-      /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
-      "module": "commonjs",
-      /* Redirect output structure to the directory. */
-      "outDir": "./dist",
-      /* Enable all strict type-checking options. */
-      "strict": true,
-      /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-      "esModuleInterop": true,
-      /* Type declaration files to be included in compilation. */
-      "lib": [
-          "es2017",
-          "dom"
-      ]
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "target": "es2018",
+    "module": "commonjs",
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": [
+      "es2018"
+    ]
   }
 }

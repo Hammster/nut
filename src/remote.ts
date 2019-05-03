@@ -17,7 +17,7 @@ function setOption (overrideOptions: Partial<IDownloadOptions> = {}) {
   options = { ...options, ...overrideOptions }
 }
 
-export async function download (source: string | URL, target: string, overrideOptions: Partial<IDownloadOptions> = {}) {
+export async function download (source: string, target: string, overrideOptions: Partial<IDownloadOptions> = {}) {
   if (Object.keys(overrideOptions).length !== 0) {
     setOption(overrideOptions)
   }
@@ -25,7 +25,7 @@ export async function download (source: string | URL, target: string, overrideOp
   await spinWrap(request(source, fileWriteStream), `download: ${source}`)
 }
 
-export async function request (source: string | URL, writeStream?: NodeJS.WritableStream) {
+export async function request (source: string, writeStream?: NodeJS.WritableStream) {
   let maxRedirect = 3
   let chunkedData = ''
   return new Promise(async (resolve, reject) => {
@@ -52,7 +52,7 @@ export async function request (source: string | URL, writeStream?: NodeJS.Writab
         // Follow the redirect or throw errow
         case 302:
           maxRedirect--
-          source = new URL('', response.headers.location)
+          source = response.headers.location!
           if (maxRedirect > 0) {
             await request(source, writeStream)
           } else {
