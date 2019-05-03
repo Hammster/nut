@@ -84,3 +84,4 @@ class NutError extends Error {
     }
 }
 exports.NutError = NutError;
+//# sourceMappingURL=error.js.map

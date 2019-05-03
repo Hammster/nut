@@ -120,3 +120,4 @@ function logTable(data = [], overloadTableStyle = {}) {
     log_1.log(table, { styles: tableStyle.borderStyle });
 }
 exports.logTable = logTable;
+//# sourceMappingURL=table.js.map

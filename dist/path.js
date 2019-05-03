@@ -6,3 +6,4 @@ function pathFromRoot(path = './') {
     return path_1.join(exports.PROJECT_ROOT, path);
 }
 exports.pathFromRoot = pathFromRoot;
+//# sourceMappingURL=path.js.map

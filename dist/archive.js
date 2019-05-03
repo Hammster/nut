@@ -43,3 +43,4 @@ async function pack(source, target, archiveType = '7z') {
     await spinner_1.spinWrap(execute, `pack archive: ${source}`);
 }
 exports.pack = pack;
+//# sourceMappingURL=archive.js.map

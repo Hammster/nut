@@ -41,3 +41,4 @@ function stopSpinner() {
     clearInterval(spinInterval);
 }
 exports.stopSpinner = stopSpinner;
+//# sourceMappingURL=spinner.js.map

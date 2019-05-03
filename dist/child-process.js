@@ -17,3 +17,4 @@ function spawn(command, args = []) {
     });
 }
 exports.spawn = spawn;
+//# sourceMappingURL=child-process.js.map

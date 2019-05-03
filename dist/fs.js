@@ -11,7 +11,7 @@ const log_1 = require("./cli/log");
 const error_1 = require("./error");
 const spinner_1 = require("./spinner");
 const defaultOptions = {
-    cwd: __dirname,
+    cwd: '.',
     flat: false,
     verbose: false
 };
@@ -90,3 +90,4 @@ async function combineFileTreeHash(globData) {
 }
 exports.combineFileTreeHash = combineFileTreeHash;
 // @TODO: create, delete, move
+//# sourceMappingURL=fs.js.map

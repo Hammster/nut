@@ -20,3 +20,4 @@ function applyStyle(msg, textStyle = {}) {
     return msg;
 }
 exports.applyStyle = applyStyle;
+//# sourceMappingURL=util.js.map

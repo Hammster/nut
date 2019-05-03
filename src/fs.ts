@@ -10,7 +10,7 @@ import { spinWrap } from './spinner'
 import { ICopyOptions } from '../types/fs'
 
 const defaultOptions: ICopyOptions = {
-  cwd: __dirname,
+  cwd: '.',
   flat: false,
   verbose: false
 }

@@ -33,3 +33,4 @@ function seperator(textStyle = {}) {
     log(seperatorString, textStyle);
 }
 exports.seperator = seperator;
+//# sourceMappingURL=log.js.map
