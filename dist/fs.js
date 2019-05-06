@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crypto_1 = __importDefault(require("crypto"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const tiny_glob_1 = __importDefault(require("tiny-glob"));
 const log_1 = require("./cli/log");
 const error_1 = require("./error");
+const glob_1 = require("./glob");
 const spinner_1 = require("./spinner");
 const defaultOptions = {
     cwd: '.',
@@ -31,7 +31,7 @@ async function copy(sources, target, overrideOptions = {}) {
         log_1.log(`target:\t ${target}`);
         log_1.log(`options:\n${JSON.stringify(options, undefined, 2)}\n`);
         for (const source of sources) {
-            const result = await spinner_1.spinWrap(tiny_glob_1.default(source), `copy: ${source}`);
+            const result = await spinner_1.spinWrap(glob_1.glob(source), `copy: ${source}`);
             for (const resultItem of result) {
                 const newRelativePath = options.flat ? path_1.default.basename(resultItem) : resultItem;
                 const contextSource = path_1.default.join(options.cwd, resultItem);
@@ -71,7 +71,7 @@ async function fileHash(filePath) {
 }
 exports.fileHash = fileHash;
 async function combineFileTreeHash(globData) {
-    const paths = await tiny_glob_1.default(globData);
+    const paths = await glob_1.glob(globData);
     const bufferList = [];
     for (let element of paths) {
         element = path_1.default.join(options.cwd, element);

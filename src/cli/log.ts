@@ -21,11 +21,10 @@ function setOption (overrideOptions: Partial<ICLILogOptions> = {}) {
 
 export function title (msg: string, textStyle: Partial<ITextStyle> = {}, seperatorStyle: Partial<ITextStyle> = {}) {
   msg = ` ${msg} `
-  const seperatorStart = seperatorString.slice(0,4)
+  const seperatorStart = seperatorString.slice(0, 4)
   const seperatorEnd = seperatorString.slice(4, seperatorString.length - msg.length)
-  const seperatorUnion = applyStyle(seperatorStart, seperatorStyle)
-    + applyStyle(msg, textStyle)
-    + applyStyle(seperatorEnd, seperatorStyle)
+  const seperatorUnion =
+    applyStyle(seperatorStart, seperatorStyle) + applyStyle(msg, textStyle) + applyStyle(seperatorEnd, seperatorStyle)
 
   log(`\n${seperatorUnion}`)
 }

@@ -23,12 +23,14 @@ function spinWrap(wrappedFunction, msg = 'loading') {
     spinInterval = setInterval(updateSpinner, 100);
     return new Promise((resolve, reject) => {
         /* tslint:disable:only-arrow-functions */
-        wrappedFunction.then(function () {
+        wrappedFunction
+            .then(function () {
             stopSpinner();
             readline_1.default.cursorTo(process.stdout, 0);
             process.stdout.write(`${util_1.style.green('✓')} ${msg}\n`);
             resolve(...arguments);
-        }).catch((error) => {
+        })
+            .catch((error) => {
             stopSpinner();
             readline_1.default.cursorTo(process.stdout, 0);
             process.stdout.write(`${util_1.style.red('✗')} ${msg}${showCursor}\n`);

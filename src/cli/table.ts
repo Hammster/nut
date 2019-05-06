@@ -40,16 +40,11 @@ setOption()
 
 function setOption (overrideOptions: Partial<ICLITableOptions> = {}) {
   options = { ...options, ...overrideOptions }
-  tabelHorizontal = TableChars.HorizontalLine.repeat(
-    options.tableEntryMaxWidth
-  )
+  tabelHorizontal = TableChars.HorizontalLine.repeat(options.tableEntryMaxWidth)
   safeStringLength = options.tableEntryMaxWidth - 3
 }
 
-export function logTable (
-  data: any[] | Map<any, any> | Set<any> = [],
-  overloadTableStyle: Partial<ITableStyle> = {}
-) {
+export function logTable (data: any[] | Map<any, any> | Set<any> = [], overloadTableStyle: Partial<ITableStyle> = {}) {
   const tableStyle: ITableStyle = {
     ...defaultTableStyle,
     ...overloadTableStyle
@@ -92,40 +87,28 @@ export function logTable (
 
   function makeHeader () {
     table += TableChars.HeadStart + tabelHorizontal
-    table +=
-      (TableChars.JoinDown + tabelHorizontal).repeat(trimedCellCount) +
-      TableChars.HeadEnd +
-      '\n'
+    table += (TableChars.JoinDown + tabelHorizontal).repeat(trimedCellCount) + TableChars.HeadEnd + '\n'
     makeCells(tableStyle.columnNames)
   }
 
   function makeRow () {
     table += TableChars.JoinRight + tabelHorizontal
-    table +=
-      (TableChars.Join + tabelHorizontal).repeat(trimedCellCount) +
-      TableChars.JoinLeft +
-      '\n'
+    table += (TableChars.Join + tabelHorizontal).repeat(trimedCellCount) + TableChars.JoinLeft + '\n'
   }
 
   function makeFooter () {
     table += TableChars.FooterStart + tabelHorizontal
-    table +=
-      (TableChars.JoinUp + tabelHorizontal).repeat(trimedCellCount) +
-      TableChars.FooterEnd +
-      '\n'
+    table += (TableChars.JoinUp + tabelHorizontal).repeat(trimedCellCount) + TableChars.FooterEnd + '\n'
   }
 
   function makeCells (cellData: any) {
     let isHead = false
     if (tableStyle.columnNames === cellData) {
       isHead = true
-      cellData = tableStyle.columnNames.reduce(
-        (accumulator: any, currentValue) => {
-          accumulator[currentValue] = currentValue
-          return accumulator
-        },
-        {}
-      )
+      cellData = tableStyle.columnNames.reduce((accumulator: any, currentValue) => {
+        accumulator[currentValue] = currentValue
+        return accumulator
+      }, {})
     }
 
     tableStyle.columnNames.forEach((columnProperty: string) => {
@@ -134,9 +117,7 @@ export function logTable (
       const fillchar = text.length >= safeStringLength ? '.' : ' '
 
       table += TableChars.VerticalLine
-      const formatted = text
-        .substring(0, safeStringLength)
-        .padEnd(options.tableEntryMaxWidth, fillchar)
+      const formatted = text.substring(0, safeStringLength).padEnd(options.tableEntryMaxWidth, fillchar)
       // tslint:disable-next-line:max-line-length
       table += isHead
         ? applyStyle(formatted, { styles: [style.bgWhite, style.black] })

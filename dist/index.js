@@ -12,4 +12,5 @@ __export(require("./fs"));
 __export(require("./remote"));
 __export(require("./spinner"));
 __export(require("./path"));
+__export(require("./glob"));
 //# sourceMappingURL=index.js.map

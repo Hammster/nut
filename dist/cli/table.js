@@ -73,25 +73,16 @@ function logTable(data = [], overloadTableStyle = {}) {
     });
     function makeHeader() {
         table += TableChars.HeadStart + tabelHorizontal;
-        table +=
-            (TableChars.JoinDown + tabelHorizontal).repeat(trimedCellCount) +
-                TableChars.HeadEnd +
-                '\n';
+        table += (TableChars.JoinDown + tabelHorizontal).repeat(trimedCellCount) + TableChars.HeadEnd + '\n';
         makeCells(tableStyle.columnNames);
     }
     function makeRow() {
         table += TableChars.JoinRight + tabelHorizontal;
-        table +=
-            (TableChars.Join + tabelHorizontal).repeat(trimedCellCount) +
-                TableChars.JoinLeft +
-                '\n';
+        table += (TableChars.Join + tabelHorizontal).repeat(trimedCellCount) + TableChars.JoinLeft + '\n';
     }
     function makeFooter() {
         table += TableChars.FooterStart + tabelHorizontal;
-        table +=
-            (TableChars.JoinUp + tabelHorizontal).repeat(trimedCellCount) +
-                TableChars.FooterEnd +
-                '\n';
+        table += (TableChars.JoinUp + tabelHorizontal).repeat(trimedCellCount) + TableChars.FooterEnd + '\n';
     }
     function makeCells(cellData) {
         let isHead = false;
@@ -107,9 +98,7 @@ function logTable(data = [], overloadTableStyle = {}) {
             const text = val.toString();
             const fillchar = text.length >= safeStringLength ? '.' : ' ';
             table += TableChars.VerticalLine;
-            const formatted = text
-                .substring(0, safeStringLength)
-                .padEnd(options.tableEntryMaxWidth, fillchar);
+            const formatted = text.substring(0, safeStringLength).padEnd(options.tableEntryMaxWidth, fillchar);
             // tslint:disable-next-line:max-line-length
             table += isHead
                 ? util_1.applyStyle(formatted, { styles: [util_1.style.bgWhite, util_1.style.black] })

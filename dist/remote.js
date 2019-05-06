@@ -51,12 +51,18 @@ async function request(source, writeStream) {
                 // Follow the redirect or throw errow
                 case 302:
                     maxRedirect--;
-                    source = response.headers.location;
+                    const location = response.headers.location;
+                    if (location === undefined) {
+                        reject(new error_1.NutError('Header error, no location available'));
+                        return;
+                    }
+                    source = location;
                     if (maxRedirect > 0) {
                         await request(source, writeStream);
                     }
                     else {
                         reject(new error_1.NutError('Max Redirect count (3) was reached'));
+                        return;
                     }
                     break;
                 // Unhandled scenario

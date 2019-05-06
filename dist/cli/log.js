@@ -17,9 +17,7 @@ function title(msg, textStyle = {}, seperatorStyle = {}) {
     msg = ` ${msg} `;
     const seperatorStart = seperatorString.slice(0, 4);
     const seperatorEnd = seperatorString.slice(4, seperatorString.length - msg.length);
-    const seperatorUnion = util_1.applyStyle(seperatorStart, seperatorStyle)
-        + util_1.applyStyle(msg, textStyle)
-        + util_1.applyStyle(seperatorEnd, seperatorStyle);
+    const seperatorUnion = util_1.applyStyle(seperatorStart, seperatorStyle) + util_1.applyStyle(msg, textStyle) + util_1.applyStyle(seperatorEnd, seperatorStyle);
     log(`\n${seperatorUnion}`);
 }
 exports.title = title;

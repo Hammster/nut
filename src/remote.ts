@@ -34,7 +34,10 @@ export async function request (source: string, writeStream?: NodeJS.WritableStre
         // Pipe the stream into the file
         case 200:
           if (writeStream) {
-            await pipe(response, writeStream)
+            await pipe(
+              response,
+              writeStream
+            )
             resolve()
           } else {
             response.on('data', (data: any) => {
@@ -52,11 +55,19 @@ export async function request (source: string, writeStream?: NodeJS.WritableStre
         // Follow the redirect or throw errow
         case 302:
           maxRedirect--
-          source = response.headers.location!
+          const location = response.headers.location
+          if (location === undefined) {
+            reject(new NutError('Header error, no location available'))
+            return
+          }
+
+          source = location
+
           if (maxRedirect > 0) {
             await request(source, writeStream)
           } else {
             reject(new NutError('Max Redirect count (3) was reached'))
+            return
           }
           break
 

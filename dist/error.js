@@ -61,17 +61,18 @@ class NutError extends Error {
                 // this will flood the memory, node 11.7+ allows for better handling with
                 // readline.createInterface await and for await
                 const fileLines = fs_1.default.readFileSync(fileName, 'utf-8').split('\n');
-                let currentLineIndex = (lineNumber >= 4 ? lineNumber - 4 : 0);
-                for (currentLineIndex; currentLineIndex <= (lineNumber + 2); currentLineIndex++) {
+                let currentLineIndex = lineNumber >= 4 ? lineNumber - 4 : 0;
+                for (currentLineIndex; currentLineIndex <= lineNumber + 2; currentLineIndex++) {
                     let currentLine = fileLines[currentLineIndex];
                     const currentLineStyled = util_1.applyStyle(currentLineIndex.toString().padStart(6, ' '), {
                         styles: [lineNumber - 1 === currentLineIndex ? util_1.style.yellow : util_1.style.gray]
                     });
                     if (lineNumber - 1 === currentLineIndex) {
                         const markercolor = [index === 0 ? util_1.style.bgRedBright : util_1.style.bgMagenta];
-                        currentLine = currentLine.substr(0, columnNumber - 1)
-                            + util_1.applyStyle(currentLine.charAt(columnNumber - 1), { styles: markercolor })
-                            + util_1.applyStyle(currentLine.substr(columnNumber), { styles: [util_1.style.reset] });
+                        currentLine =
+                            currentLine.substr(0, columnNumber - 1) +
+                                util_1.applyStyle(currentLine.charAt(columnNumber - 1), { styles: markercolor }) +
+                                util_1.applyStyle(currentLine.substr(columnNumber), { styles: [util_1.style.reset] });
                     }
                     content += `\n${currentLineStyled} | ${currentLine}`;
                 }

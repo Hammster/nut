@@ -21,7 +21,7 @@ export function handleError (error: Error) {
 
 export class NutError extends Error {
   public static convertFromError (error: Error): NutError {
-    return new NutError(error.message, error.stack!)
+    return new NutError(error.message, error.stack)
   }
 
   constructor (message: string, stack?: string) {
@@ -67,18 +67,19 @@ export class NutError extends Error {
         // readline.createInterface await and for await
         const fileLines = fs.readFileSync(fileName, 'utf-8').split('\n')
 
-        let currentLineIndex = (lineNumber >= 4 ? lineNumber - 4 : 0)
+        let currentLineIndex = lineNumber >= 4 ? lineNumber - 4 : 0
 
-        for (currentLineIndex ; currentLineIndex <= (lineNumber + 2); currentLineIndex++) {
+        for (currentLineIndex; currentLineIndex <= lineNumber + 2; currentLineIndex++) {
           let currentLine = fileLines[currentLineIndex]
           const currentLineStyled = applyStyle(currentLineIndex.toString().padStart(6, ' '), {
             styles: [lineNumber - 1 === currentLineIndex ? style.yellow : style.gray]
           })
           if (lineNumber - 1 === currentLineIndex) {
             const markercolor = [index === 0 ? style.bgRedBright : style.bgMagenta]
-            currentLine = currentLine.substr(0, columnNumber - 1)
-              + applyStyle(currentLine.charAt(columnNumber - 1), { styles: markercolor })
-              + applyStyle(currentLine.substr(columnNumber), { styles: [style.reset] })
+            currentLine =
+              currentLine.substr(0, columnNumber - 1) +
+              applyStyle(currentLine.charAt(columnNumber - 1), { styles: markercolor }) +
+              applyStyle(currentLine.substr(columnNumber), { styles: [style.reset] })
           }
           content += `\n${currentLineStyled} | ${currentLine}`
         }

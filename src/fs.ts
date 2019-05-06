@@ -1,10 +1,10 @@
 import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
-import glob from 'tiny-glob'
 
 import { log } from './cli/log'
 import { NutError } from './error'
+import { glob } from './glob'
 import { spinWrap } from './spinner'
 
 import { ICopyOptions } from '../types/fs'
@@ -31,7 +31,6 @@ export async function copy (sources: string[], target: string, overrideOptions: 
   }
 
   if (fs.existsSync(target)) {
-
     log(`globs:\t ${sources}`)
     log(`target:\t ${target}`)
     log(`options:\n${JSON.stringify(options, undefined, 2)}\n`)
