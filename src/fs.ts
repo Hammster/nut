@@ -59,7 +59,10 @@ export async function copy (sources: string[], target: string, overrideOptions: 
 export async function fileHash (filePath: string): Promise<string> {
   const bufferList = []
 
-  const absFilePath = path.join(options.cwd, filePath)
+  let absFilePath = path.join(options.cwd, filePath)
+  // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
+  absFilePath = absFilePath.charAt(0).toUpperCase() + absFilePath.slice(1)
+
   if (fs.existsSync(absFilePath)) {
     const stat = await fs.promises.lstat(absFilePath)
 

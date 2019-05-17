@@ -51,7 +51,9 @@ async function copy(sources, target, overrideOptions = {}) {
 exports.copy = copy;
 async function fileHash(filePath) {
     const bufferList = [];
-    const absFilePath = path_1.default.join(options.cwd, filePath);
+    let absFilePath = path_1.default.join(options.cwd, filePath);
+    // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
+    absFilePath = absFilePath.charAt(0).toUpperCase() + absFilePath.slice(1);
     if (fs_1.default.existsSync(absFilePath)) {
         const stat = await fs_1.default.promises.lstat(absFilePath);
         if (stat.isFile()) {
