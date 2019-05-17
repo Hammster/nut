@@ -71,10 +71,12 @@ async function fileHash(filePath) {
 }
 exports.fileHash = fileHash;
 async function combineFileTreeHash(globData) {
-    const paths = await glob_1.glob(globData);
+    const paths = await glob_1.glob(globData, { absolute: true });
     const bufferList = [];
     for (let element of paths) {
         element = path_1.default.join(options.cwd, element);
+        // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
+        element = element.charAt(0).toUpperCase() + element.slice(1);
         const stat = await fs_1.default.promises.lstat(element);
         if (stat.isFile()) {
             bufferList.push(Buffer.from(element));
@@ -89,5 +91,4 @@ async function combineFileTreeHash(globData) {
     return hash.update(resultBuffer).digest('base64');
 }
 exports.combineFileTreeHash = combineFileTreeHash;
-// @TODO: create, delete, move
 //# sourceMappingURL=fs.js.map

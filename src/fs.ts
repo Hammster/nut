@@ -80,12 +80,14 @@ export async function fileHash (filePath: string): Promise<string> {
 }
 
 export async function combineFileTreeHash (globData: string): Promise<string> {
-  const paths = await glob(globData)
+  const paths = await glob(globData, { absolute: true })
 
   const bufferList = []
 
   for (let element of paths) {
     element = path.join(options.cwd, element)
+    // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
+    element = element.charAt(0).toUpperCase() + element.slice(1)
 
     const stat = await fs.promises.lstat(element)
 
@@ -102,5 +104,3 @@ export async function combineFileTreeHash (globData: string): Promise<string> {
 
   return hash.update(resultBuffer).digest('base64')
 }
-
-// @TODO: create, delete, move
