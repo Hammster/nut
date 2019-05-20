@@ -21,8 +21,8 @@ export async function download (source: string, target: string, overrideOptions:
   if (Object.keys(overrideOptions).length !== 0) {
     setOption(overrideOptions)
   }
-  const fileWriteStream = fs.createWriteStream(path.join(__dirname, target))
-  await spinWrap(request(source, fileWriteStream), `download: ${source}`)
+  const fileWriteStream = fs.createWriteStream(target)
+  await request(source, fileWriteStream)
 }
 
 export async function request (source: string, writeStream?: NodeJS.WritableStream) {

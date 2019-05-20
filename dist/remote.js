@@ -5,11 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const https_1 = __importDefault(require("https"));
-const path_1 = __importDefault(require("path"));
 const stream_1 = require("stream");
 const util_1 = require("util");
 const error_1 = require("./error");
-const spinner_1 = require("./spinner");
 const defaultOptions = {};
 const pipe = util_1.promisify(stream_1.pipeline);
 let options = { ...defaultOptions };
@@ -20,8 +18,8 @@ async function download(source, target, overrideOptions = {}) {
     if (Object.keys(overrideOptions).length !== 0) {
         setOption(overrideOptions);
     }
-    const fileWriteStream = fs_1.default.createWriteStream(path_1.default.join(__dirname, target));
-    await spinner_1.spinWrap(request(source, fileWriteStream), `download: ${source}`);
+    const fileWriteStream = fs_1.default.createWriteStream(target);
+    await request(source, fileWriteStream);
 }
 exports.download = download;
 async function request(source, writeStream) {
