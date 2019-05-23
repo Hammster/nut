@@ -15,6 +15,7 @@ function updateSpinner () {
   readline.cursorTo(process.stdout, 0)
   spinState = (spinState + 1) % spinner.length
   process.stdout.write(`${style.green(spinner[spinState])}`)
+  readline.cursorTo(process.stdout, 0)
 }
 
 export function spinWrap (wrappedFunction: Promise<any>, msg: string = 'loading'): Promise<any> {

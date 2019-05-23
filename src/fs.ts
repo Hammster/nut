@@ -30,29 +30,29 @@ export async function copy (sources: string[], target: string, overrideOptions: 
     target = path.join(options.cwd, target)
   }
 
-  if (fs.existsSync(target)) {
-    log(`globs:\t ${sources}`)
-    log(`target:\t ${target}`)
-    log(`options:\n${JSON.stringify(options, undefined, 2)}\n`)
+  if (!fs.existsSync(target)) {
+    fs.mkdirSync(target, { recursive: true })
+  }
 
-    for (const source of sources) {
-      const result: string[] = await spinWrap(glob(source), `copy: ${source}`)
+  log(`globs:\t ${sources}`)
+  log(`target:\t ${target}`)
+  log(`options:\n${JSON.stringify(options, undefined, 2)}\n`)
 
-      for (const resultItem of result) {
-        const newRelativePath = options.flat ? path.basename(resultItem) : resultItem
-        const contextSource = path.join(options.cwd, resultItem)
-        const contextTarget = path.join(target, newRelativePath)
-        const contextTargetFolder = path.dirname(contextTarget)
+  for (const source of sources) {
+    const result: string[] = await glob(source, { absolute: true })
 
-        if (!fs.existsSync(contextTargetFolder)) {
-          fs.mkdirSync(contextTargetFolder, { recursive: true })
-        }
+    for (const resultItem of result) {
+      const contextSource = path.join(options.cwd, resultItem)
+      const contextTarget = options.flat ? path.basename(resultItem) : path.relative(options.cwd, resultItem)
+      const contextTargetAbsolute = path.join(target, contextTarget)
+      const contextTargetFolder = path.dirname(contextTargetAbsolute)
 
-        fs.copyFileSync(contextSource, contextTarget)
+      if (!fs.existsSync(contextTargetFolder)) {
+        fs.mkdirSync(contextTargetFolder, { recursive: true })
       }
+
+      fs.copyFileSync(contextSource, contextTargetAbsolute)
     }
-  } else {
-    throw new NutError(`Target does not exist ${target}`)
   }
 }
 

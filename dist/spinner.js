@@ -17,6 +17,7 @@ function updateSpinner() {
     readline_1.default.cursorTo(process.stdout, 0);
     spinState = (spinState + 1) % spinner.length;
     process.stdout.write(`${util_1.style.green(spinner[spinState])}`);
+    readline_1.default.cursorTo(process.stdout, 0);
 }
 function spinWrap(wrappedFunction, msg = 'loading') {
     process.stdout.write(`${util_1.style.green(spinner[spinState])} ${msg}`);

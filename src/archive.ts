@@ -12,8 +12,8 @@ export async function extract (source: string, target: string = './') {
     target = join(__dirname, target)
   }
 
-  const execute = new Promise((resolve, reject) => {
-    exec(`7z e ${source} -o${target} -y`, (error, stdout, stderr) => {
+  await new Promise((resolve, reject) => {
+    exec(`7z x "${source}" "-o${target}" -y`, (error, stdout, stderr) => {
       if (error) {
         reject(new NutError(error.message))
         return
@@ -22,8 +22,6 @@ export async function extract (source: string, target: string = './') {
       resolve(stdout.trim())
     })
   })
-
-  await spinWrap(execute, `extract archive: ${source}`)
 }
 
 export async function pack (source: string, target: string, archiveType = '7z') {
@@ -37,7 +35,7 @@ export async function pack (source: string, target: string, archiveType = '7z') 
     target = join(__dirname, target)
   }
 
-  const execute = new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     exec(`7z a ${typeSwitch} ${target} ${source}`, (error, stdout, stderr) => {
       if (error) {
         reject(new NutError(error.message))
@@ -47,6 +45,4 @@ export async function pack (source: string, target: string, archiveType = '7z') 
       resolve(stdout.trim())
     })
   })
-
-  await spinWrap(execute, `pack archive: ${source}`)
 }

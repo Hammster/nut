@@ -9,7 +9,6 @@ const path_1 = __importDefault(require("path"));
 const log_1 = require("./cli/log");
 const error_1 = require("./error");
 const glob_1 = require("./glob");
-const spinner_1 = require("./spinner");
 const defaultOptions = {
     cwd: '.',
     flat: false,
@@ -26,26 +25,24 @@ async function copy(sources, target, overrideOptions = {}) {
     if (!path_1.default.isAbsolute(target)) {
         target = path_1.default.join(options.cwd, target);
     }
-    if (fs_1.default.existsSync(target)) {
-        log_1.log(`globs:\t ${sources}`);
-        log_1.log(`target:\t ${target}`);
-        log_1.log(`options:\n${JSON.stringify(options, undefined, 2)}\n`);
-        for (const source of sources) {
-            const result = await spinner_1.spinWrap(glob_1.glob(source), `copy: ${source}`);
-            for (const resultItem of result) {
-                const newRelativePath = options.flat ? path_1.default.basename(resultItem) : resultItem;
-                const contextSource = path_1.default.join(options.cwd, resultItem);
-                const contextTarget = path_1.default.join(target, newRelativePath);
-                const contextTargetFolder = path_1.default.dirname(contextTarget);
-                if (!fs_1.default.existsSync(contextTargetFolder)) {
-                    fs_1.default.mkdirSync(contextTargetFolder, { recursive: true });
-                }
-                fs_1.default.copyFileSync(contextSource, contextTarget);
-            }
-        }
+    if (!fs_1.default.existsSync(target)) {
+        fs_1.default.mkdirSync(target, { recursive: true });
     }
-    else {
-        throw new error_1.NutError(`Target does not exist ${target}`);
+    log_1.log(`globs:\t ${sources}`);
+    log_1.log(`target:\t ${target}`);
+    log_1.log(`options:\n${JSON.stringify(options, undefined, 2)}\n`);
+    for (const source of sources) {
+        const result = await glob_1.glob(source, { absolute: true });
+        for (const resultItem of result) {
+            const contextSource = path_1.default.join(options.cwd, resultItem);
+            const contextTarget = options.flat ? path_1.default.basename(resultItem) : path_1.default.relative(options.cwd, resultItem);
+            const contextTargetAbsolute = path_1.default.join(target, contextTarget);
+            const contextTargetFolder = path_1.default.dirname(contextTargetAbsolute);
+            if (!fs_1.default.existsSync(contextTargetFolder)) {
+                fs_1.default.mkdirSync(contextTargetFolder, { recursive: true });
+            }
+            fs_1.default.copyFileSync(contextSource, contextTargetAbsolute);
+        }
     }
 }
 exports.copy = copy;
