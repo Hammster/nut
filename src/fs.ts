@@ -21,7 +21,7 @@ function setOption (overrideOptions: Partial<ICopyOptions> = {}) {
   options = { ...options, ...overrideOptions }
 }
 
-export async function copy (sources: string[], target: string, overrideOptions: Partial<ICopyOptions> = {}) {
+export async function copyGlob (sources: string[], target: string, overrideOptions: Partial<ICopyOptions> = {}) {
   if (Object.keys(overrideOptions).length !== 0) {
     setOption(overrideOptions)
   }
@@ -33,10 +33,6 @@ export async function copy (sources: string[], target: string, overrideOptions: 
   if (!fs.existsSync(target)) {
     fs.mkdirSync(target, { recursive: true })
   }
-
-  log(`globs:\t ${sources}`)
-  log(`target:\t ${target}`)
-  log(`options:\n${JSON.stringify(options, undefined, 2)}\n`)
 
   for (const source of sources) {
     const result: string[] = await glob(source, { absolute: true })
@@ -107,3 +103,5 @@ export async function combineFileTreeHash (globData: string): Promise<string> {
 
   return hash.update(resultBuffer).digest('base64')
 }
+
+export { copy, move, outputFile, readFile, readJson, writeJson, ensureDir } from 'fs-extra'
