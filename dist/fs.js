@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const crypto_1 = __importDefault(require("crypto"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const log_1 = require("./cli/log");
 const error_1 = require("./error");
 const glob_1 = require("./glob");
 const defaultOptions = {
@@ -18,7 +17,7 @@ let options = { ...defaultOptions };
 function setOption(overrideOptions = {}) {
     options = { ...options, ...overrideOptions };
 }
-async function copy(sources, target, overrideOptions = {}) {
+async function copyGlob(sources, target, overrideOptions = {}) {
     if (Object.keys(overrideOptions).length !== 0) {
         setOption(overrideOptions);
     }
@@ -28,9 +27,6 @@ async function copy(sources, target, overrideOptions = {}) {
     if (!fs_1.default.existsSync(target)) {
         fs_1.default.mkdirSync(target, { recursive: true });
     }
-    log_1.log(`globs:\t ${sources}`);
-    log_1.log(`target:\t ${target}`);
-    log_1.log(`options:\n${JSON.stringify(options, undefined, 2)}\n`);
     for (const source of sources) {
         const result = await glob_1.glob(source, { absolute: true });
         for (const resultItem of result) {
@@ -45,7 +41,7 @@ async function copy(sources, target, overrideOptions = {}) {
         }
     }
 }
-exports.copy = copy;
+exports.copyGlob = copyGlob;
 async function fileHash(filePath) {
     const bufferList = [];
     let absFilePath = path_1.default.join(options.cwd, filePath);
@@ -90,4 +86,12 @@ async function combineFileTreeHash(globData) {
     return hash.update(resultBuffer).digest('base64');
 }
 exports.combineFileTreeHash = combineFileTreeHash;
+var fs_extra_1 = require("fs-extra");
+exports.copy = fs_extra_1.copy;
+exports.move = fs_extra_1.move;
+exports.outputFile = fs_extra_1.outputFile;
+exports.readFile = fs_extra_1.readFile;
+exports.readJson = fs_extra_1.readJson;
+exports.writeJson = fs_extra_1.writeJson;
+exports.ensureDir = fs_extra_1.ensureDir;
 //# sourceMappingURL=fs.js.map
