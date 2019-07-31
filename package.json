@@ -11,20 +11,20 @@
     "test": "node dist/index.js"
   },
   "dependencies": {
-    "colorette": "^1.0.7",
-    "fs-extra": "^8.0.1",
+    "colorette": "^1.1.0",
+    "fs-extra": "^8.1.0",
     "node-fetch": "^2.6.0",
-    "tiny-glob": "^0.2.6"
+    "tiny-glob": "terkelg/tiny-glob"
   },
   "devDependencies": {
-    "@types/fs-extra": "^7.0.0",
-    "@types/node": "^12.0.2",
-    "@types/node-fetch": "^2.3.4",
-    "prettier": "^1.17.1",
+    "@types/fs-extra": "^8.0.0",
+    "@types/node": "^12.6.8",
+    "@types/node-fetch": "^2.5.0",
+    "prettier": "^1.18.2",
     "prettier-tslint": "^0.4.2",
     "testmatrix": "^0.1.2",
-    "tslint": "^5.16.0",
+    "tslint": "^5.18.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.4.5"
+    "typescript": "^3.5.3"
   }
 }
