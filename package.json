@@ -13,11 +13,12 @@
   "dependencies": {
     "colorette": "^1.1.0",
     "fs-extra": "^8.1.0",
-    "node-fetch": "^2.6.0",
-    "tiny-glob": "^0.2.6"
+    "glob": "^7.1.4",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
+    "@types/glob": "^7.1.1",
     "@types/node": "^12.6.8",
     "@types/node-fetch": "^2.5.0",
     "prettier": "^1.18.2",
