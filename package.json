@@ -14,7 +14,7 @@
     "colorette": "^1.1.0",
     "fs-extra": "^8.1.0",
     "node-fetch": "^2.6.0",
-    "tiny-glob": "hammster/tiny-glob#fixes-updated"
+    "tiny-glob": "^0.2.6"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
