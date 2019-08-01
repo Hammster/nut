@@ -72,7 +72,9 @@ async function combineFileTreeHash(globData) {
     const paths = await glob_1.glob(globData, { absolute: true });
     const bufferList = [];
     for (let element of paths) {
-        element = path_1.default.join(options.cwd, element);
+        if (!path_1.default.isAbsolute(element)) {
+            element = path_1.default.join(options.cwd, element);
+        }
         // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
         element = element.charAt(0).toUpperCase() + element.slice(1);
         const stat = await fs_1.default.promises.lstat(element);

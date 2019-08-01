@@ -82,11 +82,12 @@ export async function fileHash (filePath: string): Promise<string> {
 
 export async function combineFileTreeHash (globData: string): Promise<string> {
   const paths = await glob(globData, { absolute: true })
-
   const bufferList = []
 
   for (let element of paths) {
-    element = path.join(options.cwd, element)
+    if (!path.isAbsolute(element)) {
+      element = path.join(options.cwd, element)
+    }
     // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
     element = element.charAt(0).toUpperCase() + element.slice(1)
 
