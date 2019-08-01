@@ -30,7 +30,7 @@ async function copyGlob(sources, target, overrideOptions = {}) {
     for (const source of sources) {
         const result = await glob_1.glob(source, { absolute: true });
         for (const resultItem of result) {
-            const contextSource = path_1.default.join(options.cwd, resultItem);
+            const contextSource = resultItem;
             const contextTarget = options.flat ? path_1.default.basename(resultItem) : path_1.default.relative(options.cwd, resultItem);
             const contextTargetAbsolute = path_1.default.join(target, contextTarget);
             const contextTargetFolder = path_1.default.dirname(contextTargetAbsolute);
@@ -44,7 +44,10 @@ async function copyGlob(sources, target, overrideOptions = {}) {
 exports.copyGlob = copyGlob;
 async function fileHash(filePath) {
     const bufferList = [];
-    let absFilePath = path_1.default.join(options.cwd, filePath);
+    let absFilePath = filePath;
+    if (!path_1.default.isAbsolute(filePath)) {
+        absFilePath = path_1.default.join(options.cwd, filePath);
+    }
     // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
     absFilePath = absFilePath.charAt(0).toUpperCase() + absFilePath.slice(1);
     if (fs_1.default.existsSync(absFilePath)) {
