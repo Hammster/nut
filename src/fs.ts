@@ -38,7 +38,7 @@ export async function copyGlob (sources: string[], target: string, overrideOptio
     const result: string[] = await glob(source, { absolute: true })
 
     for (const resultItem of result) {
-      const contextSource = path.join(options.cwd, resultItem)
+      const contextSource = resultItem
       const contextTarget = options.flat ? path.basename(resultItem) : path.relative(options.cwd, resultItem)
       const contextTargetAbsolute = path.join(target, contextTarget)
       const contextTargetFolder = path.dirname(contextTargetAbsolute)
@@ -54,8 +54,10 @@ export async function copyGlob (sources: string[], target: string, overrideOptio
 
 export async function fileHash (filePath: string): Promise<string> {
   const bufferList = []
-
-  let absFilePath = path.join(options.cwd, filePath)
+  let absFilePath = filePath
+  if (!path.isAbsolute(filePath)) {
+    absFilePath = path.join(options.cwd, filePath)
+  }
   // UC first latter on unix '/' keeps '/' on windows the drive latter will be capitalized
   absFilePath = absFilePath.charAt(0).toUpperCase() + absFilePath.slice(1)
 
