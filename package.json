@@ -1,6 +1,6 @@
 {
   "name": "nut",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Hans Koch",
   "license": "MIT",
   "main": "dist/index.js",
